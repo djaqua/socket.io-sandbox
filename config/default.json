@@ -1,0 +1,13 @@
+{
+
+    "server": {
+        "port": 8057
+    },
+
+    "client": {
+        "bootstrap": {
+            "modules" : "*",
+            "motd": "Greetings, Earthlings"
+        }
+    }
+}

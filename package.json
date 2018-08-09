@@ -1,0 +1,31 @@
+{
+  "name": "socketio-sandbox",
+  "version": "1.0.0",
+  "description": "Template for Sandbox Pattern access to the socket.io library",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/djaqua/socketio-sandbox.git"
+  },
+  "keywords": [
+    "socketio"
+  ],
+  "author": "Andrew Jaqua <anjaqua@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/djaqua/socketio-sandbox/issues"
+  },
+  "homepage": "https://github.com/djaqua/socketio-sandbox#readme",
+  "dependencies": {
+    "config": "^2.0.1",
+    "socket.io": "^2.1.1"
+  },
+  "devDependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.18.3"
+  }
+}
