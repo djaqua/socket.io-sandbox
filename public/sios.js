@@ -37,7 +37,6 @@ var bootstrap = function(client, configuration, env) {
  */
 function SIOSClient() {
 
-    console.log('SIOSClient start');
   var args = Array.prototype.slice.apply(arguments);
   var callback = args.pop();
 
@@ -49,7 +48,6 @@ function SIOSClient() {
     socket: io()
   };
 
-// console.log('SIOSClient ' + JSON.stringify(env));
   if (args.length) {
     if (typeof args[0] === 'object') {
       options = args[0];
@@ -77,8 +75,6 @@ function SIOSClient() {
     // then release control
     callback(self);
   });
-
-  console.log('SIOSClient start');
 }
 
 

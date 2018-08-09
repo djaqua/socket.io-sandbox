@@ -5,11 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js"
+    "dev": "nodemon app.js -ignore 'public'"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/djaqua/socketio-sandbox.git"
+    "url": "git+https://github.com/djaqua/socket.io-sandbox.git"
   },
   "keywords": [
     "socketio"
@@ -17,9 +17,9 @@
   "author": "Andrew Jaqua <anjaqua@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/djaqua/socketio-sandbox/issues"
+    "url": "https://github.com/djaqua/socket.io-sandbox/issues"
   },
-  "homepage": "https://github.com/djaqua/socketio-sandbox#readme",
+  "homepage": "https://github.com/djaqua/socket.io-sandbox#readme",
   "dependencies": {
     "config": "^2.0.1",
     "socket.io": "^2.1.1"
