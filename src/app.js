@@ -12,8 +12,8 @@ app.use('/', express.static(path.join(__dirname, 'public')));
 io.on('connection', function(socket){
     console.log("connected...");
     socket.emit('bootstrap', config.get('client.bootstrap'));
-    socket.emit('broadcast', {message:'hello, world!'});
-    socket.emit('broadcast', {user:'bobby', message:'hello, world!'});
+    socket.emit('broadcast', {message:'hello, world, from the server!'});
+    socket.emit('broadcast', {user:'bobby', message:'hello, world from a user!'});
 });
 const port = config.get('server').port;
 

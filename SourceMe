@@ -1,0 +1,29 @@
+
+# console colors to make stuff look nice
+cyan=`tput setaf 6`
+blue=`tput setaf 4`
+magenta=`tput setaf 5`
+standout=`tput smso`
+nostandout=`tput rmso`
+bold=`tput bold`
+clearf=`tput sgr0`
+
+if [[ -z "$SIOS_PROJECT_HOME" ]]; then
+    export SIOS_PROJECT_HOME="$( cd "$( dirname $0 )" && pwd )"
+    NODEJS_BIN="${SIOS_PROJECT_HOME}/node_modules/.bin"
+    PROJECT_BIN="${SIOS_PROJECT_HOME}/bin"
+    export PATH="${PROJECT_BIN}:${NODEJS_BIN}:${PATH}"
+fi
+
+nvm install  # installs the correct version of NodeJS to run this microservice
+npm install  # installs the dependencies for this microservice
+
+# used by template-microservice, dev-mongo, and PM2
+# referenced in docker-compose.yml, pm2.config.js, and ./config/default.json
+test -d logs || mkdir logs
+
+# used by dev-mongo
+# referenced in docker-compose.yml 
+test -d data || mkdir data
+
+

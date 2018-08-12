@@ -4,8 +4,12 @@
   "description": "Template for Sandbox Pattern access to the socket.io library",
   "main": "app.js",
   "scripts": {
+    "start": "pm2 start pm2.config.json",
+    "stop": "pm2 stop pm2.config.json",
+    "bounce": "npm run stop; pm2 flush; npm run start",
+    "nuke": "pm2 delete pm2.config.json; rm -rf logs; rm -rf data; rm -rf node_modules;",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon app.js -ignore 'public'"
+    "dev": "nodemon src/app.js --ignore 'src/public'"
   },
   "repository": {
     "type": "git",
@@ -26,6 +30,7 @@
   },
   "devDependencies": {
     "express": "^4.16.3",
-    "nodemon": "^1.18.3"
+    "nodemon": "^1.18.3",
+    "pm2": "^3.0.3"
   }
 }

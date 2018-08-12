@@ -4,15 +4,19 @@
     <head>
         <title>socket.io-sandbox demo</title>
         <script src="/socket.io/socket.io.js"></script>
-        <!-- <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script> -->
-        <!-- <script>
-          var socket = io();
-        </script> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-        <script src="/sios.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+        <script src="/sios.js"></script>
         <style>
-
+            motd {
+                display: block;
+                margin: 15px auto;
+                width: 728px;
+                border: 1px solid #000000;
+                padding: 5px;
+                color: #F0F0F0;
+                background-color: #6395ED;
+            }
             broadcast {
                 display: block;
                 margin: 15px auto;
@@ -37,13 +41,17 @@
         </style>
     </head>
     <body>
-        <div>
-            <script>
-                new SIOSClient('*', function(client) {
-                    // client.get$Root().append(client.getConfiguration().motd);
-
-                });
-            </script>
+        <div id="foo-root">
         </div>
+
+        <div id="bar-root">
+        </div>
+
+        <script>
+            new SIOSClient('#foo-root', function(client) {
+                client.get$Root().append('<motd>' + client.getConfiguration().motd + '</motd>')
+            });
+            new SIOSClient('#bar-root', function(client){});
+        </script>
     </body>
 </html>

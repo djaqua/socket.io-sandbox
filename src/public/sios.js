@@ -45,26 +45,9 @@ function SIOSClient() {
   }
 
   var env = {
-    socket: io()
+    socket: io(),
+    el: args[0],
   };
-
-  if (args.length) {
-    if (typeof args[0] === 'object') {
-      options = args[0];
-    }
-    // else if (typeof args[0] === 'string') {
-    //   options.modules = args;
-    // }
-  }
-
-  // for use with either "new SIOSClient('*', callback...)
-  // or with "new SIOSClient(callback...)"
-  // if (!options.modules || options.modules[0] === '*') {
-  //   options.modules = [];
-  //   for (m in SIOSClient.modules) {
-  //     options.modules.push(m);
-  //   }
-  // }
 
   var self = this;
   env.socket.on('bootstrap', function(configuration) {
@@ -73,7 +56,9 @@ function SIOSClient() {
     bootstrap(self, configuration, env);
 
     // then release control
-    callback(self);
+    if (callback) {
+        callback(self);
+    };
   });
 }
 
@@ -115,7 +100,7 @@ var using = function(configuration, dependencies) {
 SIOSClient.modules = {
 
   /**
-   * dom - description
+   * dom - responsible for
    *
    * @param  {type} client        description
    * @param  {type} configuration description
@@ -123,7 +108,7 @@ SIOSClient.modules = {
    * @return {type}               description
    */
     'dom' : function(client, configuration, env) {
-        var $el = $(configuration.el || 'body');
+        var $el = $(env.el || configuration.el || 'body');
         client.get$Root = function() {
             return $el;
         };
@@ -153,19 +138,25 @@ SIOSClient.modules = {
          });
      },
 
+
+    /**
+     * broadcast - description
+     *
+     * @param  {type} client        description
+     * @param  {type} configuration description
+     * @param  {type} env           description
+     * @return {type}               description
+     */
     'broadcast' : function(client, configuration, env) {
         env.socket.on('broadcast', function(data) {
 
             if (data.user) {
-                // message is from
                 _.forEach(getOrCreateList(env, 'userBroadcastListeners'), function(listener) {
                     listener.handleUserBroadcastEvent(data.user, data.message);
                 });
             }
             else {
-                // console.log('broadcast received');
                 _.forEach(getOrCreateList(env, 'serverBroadcastListeners'), function(listener) {
-                    console.log('broadcast received');
                     listener.handleServerBroadcastEvent(data.message);
                 });
             }
@@ -188,11 +179,12 @@ SIOSClient.modules = {
     }
 
     if (using(configuration, ['users'])) {
+        // 'users' module is optional and supported by this module
         client.handleUserBroadcastEvent = function(user, message) {
-            var $broadcast = $('<broadcast/>');
+            var $broadcast = $('<broadcast />');
             $broadcast.addClass('user');
-            $broadcast.append('<user>' + user + ':<user>');
-            $broadcast.append('<message>' + message + '<message>');
+            $broadcast.append('<user>' + user + ':</user>');
+            $broadcast.append('<message>' + message + '</message>');
 
             client['get$Root']().append($broadcast);
         };
@@ -200,24 +192,11 @@ SIOSClient.modules = {
     }
 
     client.handleServerBroadcastEvent = function(message) {
-        var $broadcast = $('<broadcast/>');
-        $broadcast.append('<message>' + message + '<message>');
+        var $broadcast = $('<broadcast />');
+        $broadcast.append('<message>' + message + '</message>');
 
         client['get$Root']().append($broadcast);
     };
     getOrCreateList(env, 'serverBroadcastListeners').push(client);
-
-    client.handleUpdateUsersEvent = function(oldUsers, newUsers) {
-      // adjust private messaging concerns
-      console.log('oldUsers: ' + JSON.stringify(oldUsers));
-      console.log('newUsers: ' + JSON.stringify(newUsers));
-    };
-
-    env.socket.on('addToChat', function(data) {
-      // TODO: route message to correct window
-      _.forEach(getOrCreateList(env, 'addToChatListeners'), function(listener) {
-        listener.handleAddToChatEvent();
-      });
-    });
-  },
+  }
 };
